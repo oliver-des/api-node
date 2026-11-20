@@ -1,27 +1,25 @@
 import express from "express"
 import 'dotenv/config'
+import routerServicios from "./routes/serviciosRoutes.js";
+
+
 const app = express();
 
 const port = process.env.PORT || 3000
 
 
-const servicios = [
-  {
-    id: 1,
-    nombre: "gestión",
-    precio: 1000
-  },
-  {
-    id: 2,
-    nombre: "asesoramiento",
-    precio: 250
-  }
-];
+//middleware
+app.use('/api/v1', routerServicios)
 
-const productos = [
-  { id: 1, nombre: "Ordenador", precio: 870},
-  { id: 2, nombre: "Móvil", precio: 720 }
-];
+
+
+
+
+
+// //RUTAS PRODUCTOS
+// app.get("/api/productos", (req, res) => {
+//   res.json({});
+// });
 
 
 
