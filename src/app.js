@@ -1,8 +1,6 @@
 import express from "express"
 import 'dotenv/config'
-import routerServicios, { routerEliminarServicioById, routerModificarServicioById, routerServiciosById } from "./routes/serviciosRoutes.js";
-
-
+import routerServicios, { routerCrearProducto, routerCrearServicio, routerEliminarProductoById, routerEliminarServicioById, routerModificarProductoById, routerModificarServicioById, routerProductos, routerProductosById, routerServiciosById } from "./routes/serviciosRoutes.js";
 
 const app = express();
 
@@ -14,43 +12,26 @@ app.listen(port, () => {
 });
 
 
+//-----------------------------MIDDLEWARE SERVICIOS-----------------------------
 //middleware recibir todos los servicios.
-app.use("/api/v1", routerServicios)
-
+app.use("/api/v1", routerServicios);
 //middleware recibir un servicio por su id.
-app.use("/api/v1", routerServiciosById)
-
+app.use("/api/v1", routerServiciosById);
 //middleware modificar un servicio por su id.
-app.use("/api/v1", routerModificarServicioById)
-
+app.use("/api/v1", routerModificarServicioById);
 //middleware eliminar un servicio por su id.
-app.use("/api/v1", routerEliminarServicioById)
+app.use("/api/v1", routerEliminarServicioById);
+//middleware crear un servicio nuevo.
+app.use("/api/v1", routerCrearServicio);
 
-
-//RUTAS
-//CREAR UN SERVICIO. TODO:
-app.post('/api/v1/servicios', (req,res) => {
-  res.status(201).json({
-    ok:true,
-    msg:'servicio creado'
-  });
-})
-
-
-
-
-
-
-// //RUTAS PRODUCTOS
-// app.get("/api/productos", (req, res) => {
-//   res.json({});
-// });
-
-
-
-
-
-
-
-
-
+//-----------------------------MIDDLEWAREPRODUCTOS-----------------------------
+//middleware recibir todos los productos.
+app.use("/api/v1", routerProductos);
+//middleware recibir un producto por su id.
+app.use("/api/v1", routerProductosById);
+//middleware modificar un producto por su id.
+app.use("/api/v1", routerModificarProductoById);
+//middleware eliminar un producto por su id.
+app.use("/api/v1", routerEliminarProductoById);
+//middleware crear un producto nuevo.
+app.use("/api/v1", routerCrearProducto);
