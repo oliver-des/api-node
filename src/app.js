@@ -1,37 +1,33 @@
 import express from "express"
+import helmet from "helmet"
 import 'dotenv/config'
-import routerServicios, { routerCrearProducto, routerCrearServicio, routerEliminarProductoById, routerEliminarServicioById, routerModificarProductoById, routerModificarServicioById, routerProductos, routerProductosById, routerServiciosById } from "./routes/serviciosRoutes.js";
 
-const app = express();
+import routerServicios  from './routes/serviciosRoutes.js'
+import routerProductos from "./routes/productosRoutes.js"
+
+const app = express()
+// Añadimos capa de seguridad extra, con las opciones predefinidas por helmet
+app.use(helmet())
 
 const port = process.env.PORT || 3000
 
-//Mostramos en consola.
+
+// Middlewares integrados en Express (equivalentes a body-parser)
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+
+
+//-----------------------------MIDDLEWARE-----------------------------
+//RUTAS SERVICIOS.
+app.use("/api/v1/servicios", routerServicios);
+
+//RUTAS PRODUCTOS.
+app.use("/api/v1/productos", routerProductos);
+
+
+
+//Poner al servidor a la escucha del puerto.
 app.listen(port, () => {
-  console.log(`Servidor escuchando en http://localhost:${port}`);
+  console.log(`Servidor escuchando en ${port}`);
 });
-
-
-//-----------------------------MIDDLEWARE SERVICIOS-----------------------------
-//middleware recibir todos los servicios.
-app.use("/api/v1", routerServicios);
-//middleware recibir un servicio por su id.
-app.use("/api/v1", routerServiciosById);
-//middleware modificar un servicio por su id.
-app.use("/api/v1", routerModificarServicioById);
-//middleware eliminar un servicio por su id.
-app.use("/api/v1", routerEliminarServicioById);
-//middleware crear un servicio nuevo.
-app.use("/api/v1", routerCrearServicio);
-
-//-----------------------------MIDDLEWAREPRODUCTOS-----------------------------
-//middleware recibir todos los productos.
-app.use("/api/v1", routerProductos);
-//middleware recibir un producto por su id.
-app.use("/api/v1", routerProductosById);
-//middleware modificar un producto por su id.
-app.use("/api/v1", routerModificarProductoById);
-//middleware eliminar un producto por su id.
-app.use("/api/v1", routerEliminarProductoById);
-//middleware crear un producto nuevo.
-app.use("/api/v1", routerCrearProducto);
